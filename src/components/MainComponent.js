@@ -8,9 +8,12 @@ class MainComponent
         super(props)
 
         this.state = { 
-            currentDateTime: null
+            currentDateTime: ''
         };
+        this.timeTrack = this.timeTrack.bind(this);
+    }
 
+    componentDidMount() {
         this.timeTrack();
     }
     
@@ -37,7 +40,7 @@ class MainComponent
         return (
             <div>
                 <LocationComponent />
-                {this.state.currentDateTime}
+                <div className="text-sm text-gray-500">{this.state.currentDateTime}</div>
                 <br />
                 <WeatherDataComponent />
             </div>
