@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { SET_COORDS } from '../redux/index';
 
 class SearchLocationComponent extends Component {
     constructor(props) {
@@ -36,7 +38,10 @@ class SearchLocationComponent extends Component {
 
     selectLocation(index) {
         const { lat, lon } = this.state.list[index];
-        this.props.setCoordinates({ lat: lat, lon: lon });
+        this.props.setCoord({
+            lat: lat,
+            lon: lon
+        });
         this.setState({ list: [] });
     }
 
@@ -75,4 +80,17 @@ class SearchLocationComponent extends Component {
     }
 }
 
-export default SearchLocationComponent
+const mapStateToProps = (state) => {
+    return {
+        lon: state.lon,
+        lat: state.lat
+    }
+} 
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoord: (payload) => dispatch(SET_COORDS(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchLocationComponent);

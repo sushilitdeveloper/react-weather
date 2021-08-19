@@ -1,36 +1,33 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import SearchLocationComponent from './SearchLocationComponent';
+import { SET_COORDS } from '../redux/index';
 
 class LocationComponent extends Component {
     constructor(props) {
         super(props)
-
+    
         this.state = {
-            lat: 0,
-            lon: 0
+             
         }
     }
+    
 
     fetchLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
-            this.setState({
+            this.props.setCoord({
                 lat: position.coords.latitude,
                 lon: position.coords.longitude
             });
         });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevState.lat !== this.state.lat || prevState.lon !== this.state.lon) {
-            this.props.setCoordinates(this.state);
-        }
-    }
-
     render() {
         return (
             <>
                 <div className="searcLocationDiv">
-                    <SearchLocationComponent setCoordinates={(coords) => this.setState(coords)}/>
+                    <SearchLocationComponent />
                 </div>
                 <div className="fetchLocationDiv">
                     <button onClick={this.fetchLocation} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -42,4 +39,17 @@ class LocationComponent extends Component {
     }
 }
 
-export default LocationComponent
+const mapStateToProps = (state) => {
+    return {
+        lon: state.lon,
+        lat: state.lat
+    }
+} 
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setCoord: (payload) => dispatch(SET_COORDS(payload))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LocationComponent);

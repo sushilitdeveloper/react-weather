@@ -7,16 +7,11 @@ class MainComponent
     constructor(props) {
         super(props)
 
-        this.state = {
-            lat: 0,
-            lon: 0,
-        }
+        this.state = { 
+            currentDateTime: null
+        };
 
         this.timeTrack();
-    }
-
-    setCoordinates(coords) {
-        this.setState({lat: coords.lat, lon: coords.lon});
     }
     
     timeTrack() {
@@ -41,10 +36,10 @@ class MainComponent
         
         return (
             <div>
-                <LocationComponent setCoordinates={(coords) => this.setCoordinates(coords)} />
+                <LocationComponent />
                 {this.state.currentDateTime}
                 <br />
-                <WeatherDataComponent coords={{lat: this.state.lat, lon: this.state.lon}}/>
+                <WeatherDataComponent />
             </div>
         )
     }
