@@ -11,13 +11,12 @@ class WeatherDataComponent extends Component {
         }
     }
 
-    async fetchData() {
+    fetchData() {
 
-        await fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${this.props.coords.lat}&lon=${this.props.coords.lon}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
+        fetch(`${process.env.REACT_APP_API_URL}/weather/?lat=${this.props.coords.lat}&lon=${this.props.coords.lon}&units=metric&APPID=${process.env.REACT_APP_API_KEY}`)
             .then(res => res.json())
             .then(result => {
                 this.setState({ data: result, view: true })
-                console.log(result);
             });
 
     }
@@ -42,7 +41,7 @@ class WeatherDataComponent extends Component {
                         <div className="flex flex-col bg-white rounded p-4 w-full max-w-xs">
                             <div className="font-bold text-xl">{this.state.data.name}</div>
                             <div className="mt-6 text-6xl self-center inline-flex items-center justify-center rounded-lg text-indigo-400 h-24 w-24">
-                                <img src={`http://openweathermap.org/img/wn/${this.state.data.weather[0].icon}@2x.png`} alt={this.state.data.weather[0].description}/>
+                                <img src={`http://openweathermap.org/img/wn/${this.state.data.weather[0].icon}@2x.png`} alt={this.state.data.weather[0].description} />
                             </div>
 
                             <div className="flex flex-row items-center justify-center mt-6">
@@ -72,7 +71,7 @@ class WeatherDataComponent extends Component {
                                 </div>
                                 <div className="flex flex-col items-center">
                                     <div className="font-medium text-sm">Visibility</div>
-                                    <div className="text-sm text-gray-500">{this.state.data?.visibility}km</div>
+                                    <div className="text-sm text-gray-500">{this.state.data?.visibility}m</div>
                                 </div>
                             </div>
                         </div>

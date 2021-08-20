@@ -25,7 +25,6 @@ class SearchLocationComponent extends Component {
             .then(res => res.json())
             .then(result => {
                 this.setState({ list: result })
-                console.log(result);
             })
             .catch((err) => {
                 this.setState({ error: err.message });
@@ -58,7 +57,7 @@ class SearchLocationComponent extends Component {
                         </div>
                         {
                             this.state.list.length > 0 &&
-                            <ul className="bg-white border border-gray-100 w-full mt-2">
+                            <ul className="absolute top-8 left-0 bg-white border border-gray-100 w-full mt-2">
                                 {
                                     this.state.list.map((item, index) => {
                                         return (
