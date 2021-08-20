@@ -41,7 +41,7 @@ class WeatherDataComponent extends Component {
                         <div className="flex flex-col bg-white rounded p-4 w-full max-w-xs">
                             <div className="font-bold text-xl">{this.state.data.name}</div>
                             <div className="mt-6 text-6xl self-center inline-flex items-center justify-center rounded-lg text-indigo-400 h-24 w-24">
-                                <img src={`http://openweathermap.org/img/wn/${this.state.data.weather[0].icon}@2x.png`} alt={this.state.data.weather[0].description} />
+                                <img src={`${process.env.REACT_APP_ICON_URL}${this.state.data.weather[0].icon}@2x.png`} alt={this.state.data.weather[0].description} />
                             </div>
 
                             <div className="flex flex-row items-center justify-center mt-6">
