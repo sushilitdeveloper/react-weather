@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import FiveDayWeatherDataComponent from './FiveDayWeatherDataComponent';
 import LocationComponent from './LocationComponent';
 import WeatherDataComponent from './WeatherDataComponent';
 
 class MainComponent
- extends Component {
+    extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { 
-            currentDateTime: ''
+        this.state = {
+            currentDateTime: '',
+            setIntervalId: null,
+            weeklyData: false
         };
         this.timeTrack = this.timeTrack.bind(this);
     }
@@ -16,10 +20,10 @@ class MainComponent
     componentDidMount() {
         this.timeTrack();
     }
-    
+
     timeTrack() {
-        
-        setInterval(() => {
+
+        const setIntervalId = setInterval(() => {
             const date = new Date();
             this.setState({
                 currentDateTime: date.toLocaleString('en-US', {
@@ -33,20 +37,45 @@ class MainComponent
                 })
             })
         }, 1000);
+
+        this.setState({ setIntervalId: setIntervalId });
     }
-    
+
+    componentWillUnmount() {
+        const setIntervalId = this.state.setIntervalId;
+        clearInterval(setIntervalId);
+    }
+
     render() {
-        
+
         return (
-            <div>
+            <div className="p-10">
                 <LocationComponent />
                 <div className="text-sm text-gray-500">{this.state.currentDateTime}</div>
                 <br />
-                <WeatherDataComponent />
+                {
+                    this.props.lon && this.props.lat
+                        ? <>
+                            <WeatherDataComponent />
+                            {
+                                this.state.weeklyData
+                                    ? <FiveDayWeatherDataComponent />
+                                    : <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => this.setState({ weeklyData: true })}>Show Weekly Data</button>
+                            }
+                        </>
+                        : null
+                }
             </div>
         )
     }
 }
 
-export default MainComponent
+const mapStateToProps = (state) => {
+    return {
+        lon: state.lon,
+        lat: state.lat
+    }
+}
+
+export default connect(mapStateToProps)(MainComponent);
 
