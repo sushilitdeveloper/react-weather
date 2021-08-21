@@ -59,7 +59,7 @@ class MainComponent
                             <WeatherDataComponent />
                             {
                                 this.state.weeklyData
-                                    ? <FiveDayWeatherDataComponent />
+                                    ? <><button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={() => this.setState({ weeklyData: false })}>Hide Weekly Data</button><FiveDayWeatherDataComponent /></>
                                     : <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" onClick={() => this.setState({ weeklyData: true })}>Show Weekly Data</button>
                             }
                         </>

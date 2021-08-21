@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-export class FiveDayWeatherDataComponent extends Component {
+class FiveDayWeatherDataComponent extends Component {
     constructor(props) {
         super(props)
 
@@ -14,9 +14,15 @@ export class FiveDayWeatherDataComponent extends Component {
     }
 
     expandDayData = (dt) => {
-        this.setState({
-            expand: dt
-        })
+        if (dt === this.state.expand) {
+            this.setState({
+                expand: null
+            });
+        } else {
+            this.setState({
+                expand: dt
+            });
+        }
     }
 
     fetchData() {
